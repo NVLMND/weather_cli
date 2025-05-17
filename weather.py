@@ -43,21 +43,19 @@ def get_forecast(response):
     else:
         return None
 
-def display_current(CITY):
-    raw_data=get_weather(CITY)
-    if raw_data:
-        current_data=get_current(raw_data)
-        if current_data:
-            updated, city, country, temp, wind, hum, condition=current_data
-            print(".\n.\n.")
-            print(f"Last Updated: {updated}")
-            print(f"City: {city}")
-            print(f"Country: {country}")
-            print(f"Temperature: {temp}°C")
-            print(f"wind: {wind}kph")
-            print(f"humidity: {hum}")
-            print(f"Condition: {condition}\n.\n.\n")
-            return {
+def display_current(raw_data):
+    current_data=get_current(raw_data)
+    if current_data:
+        updated, city, country, temp, wind, hum, condition=current_data
+        print(".\n.\n.")
+        print(f"Last Updated: {updated}")
+        print(f"City: {city}")
+        print(f"Country: {country}")
+        print(f"Temperature: {temp}°C")
+        print(f"wind: {wind}kph")
+        print(f"humidity: {hum}")
+        print(f"Condition: {condition}\n.\n.\n")
+        return {
                 "updated": updated,
                 "city": city,
                 "country": country,
@@ -70,22 +68,20 @@ def display_current(CITY):
         print("city not found.")
         return None
 
-def display_forecast(CITY):
-    raw_data=get_weather(CITY)
-    if raw_data:
-        forecast_data=get_forecast(raw_data)
-        if forecast_data:
-            date, maxtemp, avgtemp, mintemp, maxwind, rain, snow, condition=forecast_data
-            print(".\n.\n.")
-            print(f"Date: {date}")
-            print(f"Max Temperature: {maxtemp}°C")
-            print(f"Avg Temperature: {avgtemp}°C")
-            print(f"Min Temperature: {mintemp}°C")
-            print(f"Max Wind: {maxwind}kph")
-            print(f"Rain: {rain}%")
-            print(f"snow: {snow}%")
-            print(f"Condition: {condition}\n.\n.\n.")
-            return {
+def display_forecast(raw_data):
+    forecast_data=get_forecast(raw_data)
+    if forecast_data:
+        date, maxtemp, avgtemp, mintemp, maxwind, rain, snow, condition=forecast_data
+        print(".\n.\n.")
+        print(f"Date: {date}")
+        print(f"Max Temperature: {maxtemp}°C")
+        print(f"Avg Temperature: {avgtemp}°C")
+        print(f"Min Temperature: {mintemp}°C")
+        print(f"Max Wind: {maxwind}kph")
+        print(f"Rain: {rain}%")
+        print(f"snow: {snow}%")
+        print(f"Condition: {condition}\n.\n.\n.")
+        return {
                 "date": date,
                 "maxtemperature": maxtemp,
                 "avgtemperature": avgtemp,
@@ -122,7 +118,7 @@ def main():
             try:
                 which_weather=int(input(".\n.\n.\nType-\nFor current weather '1'\nFor Forecast '2'\n: "))
                 if which_weather==1:
-                    history_record=display_current(CITY)
+                    history_record=display_current(raw_data)
                     if history_record:
                         history.append(history_record)
                         with open(file_path, "w")as file:
@@ -130,7 +126,7 @@ def main():
                         print("History Saved.")
                         break
                 elif which_weather==2:
-                    history_record=display_forecast(CITY)
+                    history_record=display_forecast(raw_data)
                     if history_record:
                         history.append(history_record)
                         with open(file_path, "w")as file:
