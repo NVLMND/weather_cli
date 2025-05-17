@@ -10,7 +10,7 @@ def get_weather(CITY):
     base_url="http://api.weatherapi.com/v1"
     forecast_url=f"{base_url}/forecast.json?q={CITY}&key={api_key}"
 
-    response=requests.get(forecast_url)
+    response=requests.get(forecast_url, timeout=5)
     return response
 
 def get_current(response):
